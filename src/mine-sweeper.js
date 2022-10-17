@@ -23,9 +23,78 @@ const { NotImplementedError } = require('../extensions/index.js');
  *  [1, 1, 1]
  * ]
  */
-function minesweeper(/* matrix */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+function minesweeper(matrix) {
+  function getCell(x, y) {
+    if ((x < 0) || (y < 0) ||
+      (x > (matrix.length - 1)) || (y > matrix.length - 1)) {
+      return false;
+    }
+    return true;
+  }
+
+  let newMatrix = [];
+  let len = 0;
+
+  for (let i = 0; i < matrix.length; i++) {
+
+    for (let j = 0; j < matrix[i].length; j++) {
+      let count = 0;
+      len = matrix[i].length;
+
+      if (getCell(i - 1, j - 1)) {
+        if (matrix[i - 1][j - 1]) {
+          count++;
+        }
+      }
+
+      if (getCell(i - 1, j)) {
+        if (matrix[i - 1][j]) {
+          count++;
+        }
+      }
+
+      if (getCell(i - 1, j + 1)) {
+        if (matrix[i - 1][j + 1]) {
+          count++;
+        }
+      }
+
+      if (getCell(i, j - 1)) {
+        if (matrix[i][j - 1]) {
+          count++;
+        }
+      }
+
+      if (getCell(i, j + 1)) {
+        if (matrix[i][j + 1]) {
+          count++;
+        }
+      }
+
+      if (getCell(i + 1, j - 1)) {
+        if (matrix[i + 1][j - 1]) {
+          count++;
+        }
+      }
+
+      if (getCell(i + 1, j)) {
+        if (matrix[i + 1][j]) {
+          count++;
+        }
+      }
+
+      if (getCell(i + 1, j + 1)) {
+        if (matrix[i + 1][j + 1]) {
+          count++;
+        }
+      }
+      newMatrix.push(count);
+    }
+  }
+
+  return newMatrix.reduce(function (rows, key, index) {
+    return (index % len == 0 ? rows.push([key]) : rows[rows.length - 1].push(key)) && rows;
+  }, []);
 }
 
 module.exports = {
